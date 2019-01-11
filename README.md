@@ -9,8 +9,12 @@ You can convert then the model into The Standard for exchange of architecture mo
 
 for using plugin in gradle
 
-1) configure plugin in build.gradle
+1) configure plugin in build.gradle, select whrere to put file and your programm packages for analysis.
 
+plugins {
+    id 'life.expert.archidoc' version '1.0.0'
+    }
+    
 archidoc {
     file  "$buildDir/architecture/classdiagram.dot"
     packages ='life.expert'
@@ -22,10 +26,12 @@ archidoc {
 ./gradlew arhidoc
 
 
-also opions avialable:
+Also options avialable:
 
     enableFieldInfo()
     enableMethodInfo()      
     ignoreFieldVisibility() 
     ignoreMethodVisibility()    
     enableClassInfo()  
+
+Plugin avialable at https://plugins.gradle.org/u/wilmerkrisp
