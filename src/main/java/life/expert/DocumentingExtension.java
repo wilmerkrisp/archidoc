@@ -18,6 +18,17 @@ package life.expert;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+
+
+
+
+
+
 public class DocumentingExtension
 	{
 	
@@ -41,20 +52,21 @@ public class DocumentingExtension
 	
 	
 	
-	private String packages;
+	private ArrayList<String> packages = new ArrayList<String>();
 	
 	
 	
-	public String getPackages()
+	public List<String> getPackages()
 		{
 		return packages;
 		}
 	
 	
 	
-	public void setPackages( String packages )
+	public void setPackages( List<String> packages )
 		{
-		this.packages = packages;
+		this.packages.clear();
+		this.packages.addAll( packages);
 		}
 	
 	
