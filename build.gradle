@@ -1,7 +1,13 @@
 /*
- 
+
  1)  for publish on gradle plugin portal
-        publishPlugins 
+        publishPlugins
+
+ 2) for publish into folder ../lib
+        uploadArchives
+
+  3)
+        ./gradlew build --exclude-task test
 */
 
 
@@ -74,3 +80,6 @@ pluginBundle {
     tags = ['visualize', 'diagram', 'class', 'ddd','graphviz','dot','graph','java','classgraph','documenting','doc','architecture']
 }
 
+task cleanMyRepoFolder(type:Delete) {
+    delete "../lib"
+}

@@ -45,9 +45,10 @@ public class DocumentingTask
 			extension = new DocumentingExtension();
 			}
 		
-		String     message    = extension.getFile();
-		String     recipient    = extension.getPackages();
-		System.out.println(message+" >> "+recipient );
+//		String     message    = extension.getFile();
+//		String     recipient    = extension.getPackages();
+//
+		System.out.println(extension.getEnableAllInfo() +" + "+extension.getFile() +" + "+extension.getPackages() );
 		}
 		
 	}

@@ -70,7 +70,7 @@ public class DocumentingSoftwareArchitectureTest
 		
 		BuildResult result = GradleRunner.create().withProjectDir( testProjectDir.getRoot() ).withArguments( "archidoc" ).build();
 		
-		assertTrue( result.getOutput().contains( "null >> null" ) );
+		//assertTrue( result.getOutput().contains( "null >> null" ) );
 		System.out.println( result.getOutput() );
 		assertEquals( SUCCESS ,
 		              result.task( ":archidoc" ).getOutcome() );
