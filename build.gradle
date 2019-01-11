@@ -1,0 +1,76 @@
+/*
+ 
+ 1)  for publish on gradle plugin portal
+        publishPlugins 
+*/
+
+
+
+plugins {
+    id 'java'
+    //id 'groovy'
+    // id 'distribution'
+    id 'maven'
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.10.0'
+    id "com.palantir.idea-test-fix" version "0.1.0"
+}
+
+version '1.0.0'
+group = 'life.expert'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenCentral()
+}
+
+wrapper {
+    gradleVersion = 5.1
+}
+
+
+
+
+dependencies {
+    testCompile("junit:junit:4.12")
+    testRuntime("org.junit.vintage:junit-vintage-engine:5.3.2")
+    testImplementation gradleTestKit()
+}
+
+
+//
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url:"file:../lib")
+        }
+    }
+}
+//
+//
+test {
+    useJUnitPlatform
+            {
+                includeEngines 'junit-vintage'
+}   }
+
+
+
+gradlePlugin {
+    plugins {
+        DocumentingSoftwareArchitecture {
+            id = 'life.expert.archidoc'
+            implementationClass = 'life.expert.DocumentingSoftwareArchitecture'
+            displayName = 'Documenting Software Architecture Plugin. Visualizing code of your application. It generates full diagram of your classes.'
+            description = 'Plugin is based on work - Classgraph. You can open the generated dot file in a vector editor. You can convert then the model into The Standard for exchange of architecture models from The Open Group'
+        }
+    }
+}
+
+pluginBundle {
+    website = 'http://arch.expert.life'
+    vcsUrl = 'https://github.com/wilmerkrisp/archidoc'
+    tags = ['visualize', 'diagram', 'class', 'ddd','graphviz','dot','graph','java','classgraph','documenting','doc','architecture']
+}
+
