@@ -11,14 +11,14 @@ for using plugin in gradle
 
 1) configure plugin in build.gradle, select whrere to put file and your programm packages for analysis.
 
-plugins {
-    id 'life.expert.archidoc' version '1.0.0'
+plugins { <br>
+    id 'life.expert.archidoc' version '1.0.0'  <br>
     }
     
-archidoc {
-    file  "$buildDir/architecture/classdiagram.dot"
-    packages ='life.expert'
-    enableAllInfo()
+archidoc { <br>
+    file  "$buildDir/architecture/classdiagram.dot" <br>
+    packages ='life.expert' <br>
+    enableAllInfo()  <br>
 }
 
 2) run task archidoc
