@@ -7,31 +7,6 @@ package life.expert;
 
 
 
-
-import org.jetbrains.annotations.*;                     //@NotNull
-import com.google.errorprone.annotations.Immutable;     //@Immutable
-
-import com.google.common.flogger.FluentLogger;          //log
-
-import static java.text.MessageFormat.format;           //format string
-
-import java.util.ResourceBundle;
-
-import com.google.common.collect.*;                     //ImmutableList
-
-import static com.google.common.base.Preconditions.*;   //checkArgument
-import static life.expert.common.base.Preconditions.*;  //checkCollection
-import static org.apache.commons.lang3.Validate.*;      //notEmpty(collection)
-import static life.expert.common.base.Objects.*;        //deepCopyOfObject
-
-import java.util.function.*;                            //producer supplier
-
-import static cyclops.function.Memoize.*;               //memoizeSupplier
-import static java.util.stream.Collectors.*;            //toList streamAPI
-import static java.util.function.Predicate.*;           //isEqual streamAPI
-
-
-
 //@Header@
 //--------------------------------------------------------------------------------
 //
@@ -51,6 +26,35 @@ import static java.util.function.Predicate.*;           //isEqual streamAPI
 public class DocumentingExtension
 	{
 	
+	private String file;
+	public String getFile()
+		{
+		return file;
+		}
 	
 	
+	
+	public void setFile( String file )
+		{
+		this.file = file;
+		}
+	
+	
+	private String packages;
+	
+	
+	
+	public String getPackages()
+		{
+		return packages;
+		}
+	
+	
+	
+	public void setPackages( String packages )
+		{
+		this.packages = packages;
+		}
+		
+		
 	}
