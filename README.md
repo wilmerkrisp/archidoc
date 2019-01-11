@@ -21,7 +21,7 @@ archidoc {
 
 ./gradlew arhidoc
 
-3)
+
 also opions avialable:
 
     enableFieldInfo()
