@@ -62,8 +62,8 @@ gradlePlugin {
         DocumentingSoftwareArchitecture {
             id = 'life.expert.archidoc'
             implementationClass = 'life.expert.DocumentingSoftwareArchitecture'
-            displayName = 'Documenting Software Architecture Plugin. Visualizing code of your application. It generates full diagram of your classes.'
-            description = 'Plugin is based on work - Classgraph. You can open the generated dot file in a vector editor. You can convert then the model into The Standard for exchange of architecture models from The Open Group'
+            displayName = 'Documenting Software Architecture Plugin. Visualizing code of your application. It generates full diagram of your classes into .dot(graphviz) file.'
+            description = 'Plugin is based on work - Classgraph. You can open the generated .dot file in a vector editor. You can convert then the model into The Standard for exchange of architecture models from The Open Group'
         }
     }
 }
