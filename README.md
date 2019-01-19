@@ -7,6 +7,10 @@ Plugin is based on work - Classgraph (https://github.com/classgraph/classgraph).
 You can open the generated dot file in a vector editor. 
 You can convert then the model into The Standard for exchange of architecture models from The Open Group
 
+Plugin uses all jars in runtimeClasspath configuration
+and also main source set build folder (there for the task depends on 'build' task)
+Scans both project and subprojects
+
 for using plugin in gradle
 
 1) configure plugin in build.gradle, select whrere to put file and your programm packages for analysis.
@@ -17,7 +21,7 @@ plugins { <br>
     
 archidoc { <br>
     file  "$buildDir/architecture/classdiagram.dot" <br>
-    packages ='life.expert' <br>
+    packages = ['com.my'] <br>
     enableAllInfo()  <br>
 }
 
