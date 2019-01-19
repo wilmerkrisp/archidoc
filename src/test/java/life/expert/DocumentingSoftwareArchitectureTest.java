@@ -62,7 +62,7 @@ public class DocumentingSoftwareArchitectureTest
 		{
 		
 		String buildFileContent = "buildscript {\n" + "    repositories {\n" + "        maven {\n" + "            url \"file:/Volumes/trahard/_YANDEXDISK/JAVA2017apps/lib\"\n" + "        }\n" + "        mavenCentral()\n" + "    }\n" + "    dependencies {\n" + "        classpath 'life.expert:archidoc:1.0.0'\n" + "    }\n" + "}\n" + "apply plugin : 'life.expert.archidoc'\n";
-		
+		//String buildFileContent = "plugins { id 'life.expert.archidoc' version '1.0.0' }";
 		System.out.println( buildFileContent );
 		
 		writeFile( buildFile ,
@@ -70,7 +70,7 @@ public class DocumentingSoftwareArchitectureTest
 		
 		BuildResult result = GradleRunner.create().withProjectDir( testProjectDir.getRoot() ).withArguments( "archidoc" ).build();
 		
-		//assertTrue( result.getOutput().contains( "null >> null" ) );
+		//=assertTrue( result.getOutput().contains( "null >> null" ) );
 		System.out.println( result.getOutput() );
 		assertEquals( SUCCESS ,
 		              result.task( ":archidoc" ).getOutcome() );
