@@ -8,13 +8,13 @@
 
   3)
         ./gradlew build --exclude-task test
-        
-        
- 
+
+
+
  for debug
   ./gradlew tasks -Dorg.gradle.debug=true --no-daemon
- 
-        
+
+
 */
 
 
@@ -43,15 +43,13 @@ wrapper {
 }
 
 
-
-
 dependencies {
     testCompile("junit:junit:4.12")  //necessary - vintage
     testRuntime("org.junit.vintage:junit-vintage-engine:5.3.2")
     testImplementation gradleTestKit()
 
     //implementation  'io.github.classgraph:classgraph:4.6.12'
-    implementation  'io.github.classgraph:classgraph:4.6.10'
+    implementation 'io.github.classgraph:classgraph:4.6.10'
 }
 
 
@@ -73,24 +71,26 @@ test {
 }   }
 
 
-
 gradlePlugin {
     plugins {
         DocumentingSoftwareArchitecture {
             id = 'life.expert.archidoc'
             implementationClass = 'life.expert.DocumentingSoftwareArchitecture'
-            displayName = 'Documenting Software Architecture Plugin. Visualizing code of your application. It generates full diagram of your classes into .dot(graphviz) file.'
-            description = 'Plugin is based on work - Classgraph. You can open the generated .dot file in a vector editor. You can convert then the model into The Standard for exchange of architecture models from The Open Group'
+            displayName = 'Documenting Software Architecture Plugin. Visualizing code of your application. It generates full diagram of your classes into .dot(graphviz) file. Plugin is based on work - Classgraph. You can open the generated .dot file in a vector editor. You can convert then the model into The Standard for exchange of architecture models from The Open Group'
+            description = displayName
         }
     }
 }
 
 pluginBundle {
-    website = 'http://arch.expert.life'
+    website = 'https://github.com/wilmerkrisp/archidoc'
     vcsUrl = 'https://github.com/wilmerkrisp/archidoc'
-    tags = ['visualize', 'diagram', 'class', 'ddd','graphviz','dot','graph','java','classgraph','documenting','doc','architecture']
+    tags = ['visualize', 'diagram', 'class', 'ddd', 'graphviz', 'dot', 'graph', 'java', 'classgraph', 'documenting', 'doc', 'architecture']
 }
 
 task cleanMyRepoFolder(type:Delete) {
     delete "../lib"
 }
+
+
+

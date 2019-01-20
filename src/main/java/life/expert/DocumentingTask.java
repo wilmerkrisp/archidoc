@@ -54,57 +54,10 @@ public class DocumentingTask
 	
 	
 	
-	public Optional< URL > fileToUrl( File file )
-		{
-		try
-			{
-			return Optional.ofNullable( file.toURI().toURL() );
-			}
-		catch( MalformedURLException e )
-			{
-			return Optional.empty();
-			}
-		}
-	
-	
-	
-	private List< SourceSet > sourceSetMain()
-		{
-		Project              project    = getProject();
-		JavaPluginConvention convention = project.getConvention().findPlugin( JavaPluginConvention.class );
-		List< SourceSet >    sourceSets = convention.getSourceSets().stream().filter( sourceSet -> sourceSet.getName().equals( SourceSet.MAIN_SOURCE_SET_NAME ) ).collect( Collectors.toList() );
-		return sourceSets;
-		}
-	
-	
-	
-	public Set< URL > classPathsMainSourceSet()
-		{
-		//output.getClassesDirs().getFiles().stream()
-		//StreamSupport.stream( conf.spliterator() ,false )
-		//StreamSupport.stream(  output.getClassesDirs().spliterator() ,false )
-		
-		return sourceSetMain().stream().map( SourceSet::getOutput ).flatMap( output -> StreamSupport.stream( output.getClassesDirs().spliterator() ,
-		                                                                                                     false ) ).map( this::fileToUrl ).filter( Optional::isPresent ).map( Optional::get ).collect( toSet() );
-		}
-	
-	
-	
-	public List< URL > classPathsDependenciesJar()
-		{
-		Project       p    = getProject();
-		Configuration conf = p.getConfigurations().getByName( "runtimeClasspath" );
-		return StreamSupport.stream( conf.spliterator() ,
-		                             false ).filter( ( f ) -> f.getName().endsWith( "jar" ) ).map( this::fileToUrl ).filter( Optional::isPresent ).map( Optional::get ).collect( toList() );
-			
-		}
-	
-	
-	
 	@TaskAction
 	void documentingArchitecture()
 		{
-		System.out.println( "v4" );
+		System.out.println( "v5" );
 		
 		DocumentingExtension extension = getProject().getExtensions().findByType( DocumentingExtension.class );
 		if( extension == null )
@@ -124,22 +77,13 @@ public class DocumentingTask
 		System.out.println( pkg );
 		
 		
-		
-		//sourceSetMain.main.output.classesDirs.each { println it.toURI().toURL() }
-		
-		
-		List<URL> l=classPathsDependenciesJar();
-		l.addAll( classPathsMainSourceSet() );
-		System.out.println( l );
-		
-		URL[] urls = l.toArray(new URL[0]);
-		
+		//
 		
 		//ClassGraph#ignoreClassVisibility(), ClassGraph#ignoreFieldVisibility() and/or ClassGraph#ignoreMethodVisibility()
 		
 		try( ScanResult scanResult =                // Assign scanResult in try-with-resources
 			     new ClassGraph()                    // Create a new ClassGraph instance
-			                                         .overrideClasspath( urls )
+			                                         .overrideClasspath( RetrieveClasspaths.retrieveClasspathsForAllProjects( getProject() ) )
 			                                         .verbose()                      // If you want to enable logging to stderr
 			                                         .enableAllInfo()                // Scan classes, methods, fields, annotations
 			                                         .whitelistPackages( pkg )   // Scan com.xyz and subpackages
