@@ -12,7 +12,7 @@
 
 
  for debug
-  ./gradlew tasks -Dorg.gradle.debug=true --no-daemon
+  ./gradlew archidoc -Dorg.gradle.debug=true --no-daemon
 
 
 */
@@ -29,7 +29,7 @@ plugins {
     //id "com.palantir.idea-test-fix" version "0.1.0"
 }
 
-version '1.0.0'
+version '1.0.3'
 group = 'life.expert'
 
 sourceCompatibility = JavaVersion.VERSION_1_8

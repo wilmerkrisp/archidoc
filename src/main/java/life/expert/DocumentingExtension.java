@@ -29,6 +29,9 @@ import java.util.List;
 
 
 
+/**
+ * The type Documenting extension.
+ */
 public class DocumentingExtension
 	{
 	
@@ -38,6 +41,11 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * Gets file.
+	 *
+	 * @return the file
+	 */
 	public String getFile()
 		{
 		return file;
@@ -45,6 +53,12 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * Sets file.
+	 *
+	 * @param file
+	 * 	the file
+	 */
 	public void setFile( String file )
 		{
 		this.file = file;
@@ -52,29 +66,48 @@ public class DocumentingExtension
 	
 	
 	
-	private ArrayList<String> packages = new ArrayList<String>();
+	private ArrayList< String > packages = new ArrayList< String >();
 	
 	
 	
-	public List<String> getPackages()
+	/**
+	 * Gets packages.
+	 *
+	 * @return the packages
+	 */
+	public List< String > getPackages()
 		{
 		return packages;
 		}
 	
 	
 	
-	public void setPackages( List<String> packages )
+	/**
+	 * Sets packages.
+	 *
+	 * @param packages
+	 * 	the packages
+	 */
+	public void setPackages( List< String > packages )
 		{
 		this.packages.clear();
-		this.packages.addAll( packages);
+		this.packages.addAll( packages );
 		}
 	
 	
 	
+	/**
+	 * The Enable all info.
+	 */
 	public Boolean enableAllInfo = false;
 	
 	
 	
+	/**
+	 * Gets enable all info.
+	 *
+	 * @return the enable all info
+	 */
 	public Boolean getEnableAllInfo()
 		{
 		
@@ -83,6 +116,12 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * Sets enable all info.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
 	public void setEnableAllInfo( final Boolean fake )
 		{
 		
@@ -92,10 +131,18 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * The Enable class info.
+	 */
 	public Boolean enableClassInfo = false;
 	
 	
 	
+	/**
+	 * Gets enable class info.
+	 *
+	 * @return the enable class info
+	 */
 	public Boolean getEnableClassInfo()
 		{
 		return enableClassInfo;
@@ -103,6 +150,12 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * Sets enable class info.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
 	public void setEnableClassInfo( final Boolean fake )
 		{
 		this.enableClassInfo = true;
@@ -110,10 +163,18 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * The Enable field info.
+	 */
 	public Boolean enableFieldInfo = false;
 	
 	
 	
+	/**
+	 * Gets enable field info.
+	 *
+	 * @return the enable field info
+	 */
 	public Boolean getEnableFieldInfo()
 		{
 		return enableFieldInfo;
@@ -121,6 +182,12 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * Sets enable field info.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
 	public void setEnableFieldInfo( final Boolean fake )
 		{
 		this.enableFieldInfo = true;
@@ -128,10 +195,18 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * The Enable method info.
+	 */
 	public Boolean enableMethodInfo = false;
 	
 	
 	
+	/**
+	 * Gets enable method info.
+	 *
+	 * @return the enable method info
+	 */
 	public Boolean getEnableMethodInfo()
 		{
 		return enableMethodInfo;
@@ -139,6 +214,12 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * Sets enable method info.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
 	public void setEnableMethodInfo( final Boolean fake )
 		{
 		this.enableMethodInfo = true;
@@ -146,10 +227,18 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * The Ignore field visibility.
+	 */
 	public Boolean ignoreFieldVisibility = false;
 	
 	
 	
+	/**
+	 * Gets ignore field visibility.
+	 *
+	 * @return the ignore field visibility
+	 */
 	public Boolean getIgnoreFieldVisibility()
 		{
 		return ignoreFieldVisibility;
@@ -157,6 +246,12 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * Sets ignore field visibility.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
 	public void setIgnoreFieldVisibility( final Boolean fake )
 		{
 		this.ignoreFieldVisibility = true;
@@ -164,10 +259,18 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * The Ignore method visibility.
+	 */
 	public Boolean ignoreMethodVisibility = false;
 	
 	
 	
+	/**
+	 * Gets ignore method visibility.
+	 *
+	 * @return the ignore method visibility
+	 */
 	public Boolean getIgnoreMethodVisibility()
 		{
 		return ignoreMethodVisibility;
@@ -175,9 +278,44 @@ public class DocumentingExtension
 	
 	
 	
+	/**
+	 * Sets ignore method visibility.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
 	public void setIgnoreMethodVisibility( final Boolean fake )
 		{
 		this.ignoreMethodVisibility = true;
+		}
+	
+	
+	
+	private Boolean verbose=false;
+	
+	
+	
+	/**
+	 * Gets verbose.
+	 *
+	 * @return the verbose
+	 */
+	public String getVerbose()
+		{
+		return file;
+		}
+	
+	
+	
+	/**
+	 * Sets verbose.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
+	public void setVerbose( final boolean fake )
+		{
+		this.verbose = true;
 		}
 		
 		

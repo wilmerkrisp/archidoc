@@ -32,9 +32,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -48,16 +52,82 @@ import static java.util.stream.Collectors.*;
 
 
 
+/**
+ * The type Documenting task.
+ */
 public class DocumentingTask
 	extends DefaultTask
 	{
 	
 	
 	
+	private void generateArchiOnDefaultFile( ClassInfoList classList )
+		{
+		File file;
+		try
+			{
+			file = new File( "architecture.dot" );
+			file.getParentFile().mkdirs();
+			file.createNewFile();
+			classList.generateGraphVizDotFile( file );
+			}
+		catch( IOException | NullPointerException exception )
+			{
+			throw new RuntimeException( "Please set correct path for file with filename. " ,
+			                            exception );
+				
+			}
+		}
+	
+	
+	
+	/**
+	 * Creates a File if the file does not exist, or returns a
+	 * reference to the File if it already exists.
+	 */
+	private File createOrRetrieve( final String target )
+	throws IOException
+		{
+		
+		Path path   = Paths.get( target );
+		Path       parent = path.getParent();
+		
+		
+		if( parent == null )
+			{
+			Path build_dir=getProject().getBuildDir().toPath();
+			parent=build_dir.resolve( "architecture" );
+			path=parent.resolve(path);
+			System.out.println( "!Parent2: "+path.toAbsolutePath());
+			}
+		
+		
+		if( Files.notExists( path ) )
+			{
+			
+			
+			
+			//LOG.info( "Target file \"" + target + "\" will be created." );
+			System.out.println( "Target file " + path.toAbsolutePath() + " will be created." + parent );
+			
+			
+			Files.createDirectories( parent );
+			
+			System.out.println( "!then file: " );
+			if( Files.notExists( path ) )
+				Files.createFile( path ).toFile();
+			}
+		
+		System.out.println( "Target file \"" + path.toAbsolutePath() + "\" will be retrieved." );
+		return path.toFile();
+		}
+	
+	
+	
 	@TaskAction
 	void documentingArchitecture()
 		{
-		System.out.println( "v5" );
+		System.out.println( "v9" );
 		
 		DocumentingExtension extension = getProject().getExtensions().findByType( DocumentingExtension.class );
 		if( extension == null )
@@ -70,7 +140,7 @@ public class DocumentingTask
 		//
 		System.out.println( extension.getEnableAllInfo() + " + " + extension.getFile() + " + " + extension.getPackages() );
 		
-		
+		//getProject().
 		
 		String[] pkg      = extension.getPackages().toArray( new String[1] );
 		String   filename = extension.getFile();
@@ -83,8 +153,7 @@ public class DocumentingTask
 		
 		try( ScanResult scanResult =                // Assign scanResult in try-with-resources
 			     new ClassGraph()                    // Create a new ClassGraph instance
-			                                         .overrideClasspath( RetrieveClasspaths.retrieveClasspathsForAllProjects( getProject() ) )
-			                                         .verbose()                      // If you want to enable logging to stderr
+			                                         .overrideClasspath( (Object[]) RetrieveClasspaths.retrieveClasspathsForAllProjects( getProject() ) ).verbose()                      // If you want to enable logging to stderr
 			                                         .enableAllInfo()                // Scan classes, methods, fields, annotations
 			                                         .whitelistPackages( pkg )   // Scan com.xyz and subpackages
 			                                         .scan() )
@@ -95,26 +164,25 @@ public class DocumentingTask
 			
 			
 			
-			File file = new File( filename );
-			file.getParentFile().mkdirs();
-			//scanResult.getAllClasses().generateClassGraphDotFile(File file)
+			File file;
 			
-			//System.out.println( "!!!!!!!!!!!!!!!" + class_list );
+			
 			try
 				{
-				file.createNewFile();
+				file = createOrRetrieve( filename );
+				System.out.println( "!!file created: " );
+				
+				
 				class_list.generateGraphVizDotFile( file );
 				}
-			catch( IOException exception )
+			catch( IOException | NullPointerException exception )
 				{
-				throw new RuntimeException( "Please set correct path for file with filename. " ,
+				throw new RuntimeException( "Please set correct path for file with filename. For example file  \"$buildDir/architecture/classdiagram.dot\" " ,
 				                            exception );
-					
 				}
-			
-			
-			
-			// ...
+				
+				
+				
 			}
 			
 			
