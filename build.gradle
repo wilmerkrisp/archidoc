@@ -29,7 +29,7 @@ plugins {
     //id "com.palantir.idea-test-fix" version "0.1.0"
 }
 
-version '1.0.3'
+version '1.0.4'
 group = 'life.expert'
 
 sourceCompatibility = JavaVersion.VERSION_1_8

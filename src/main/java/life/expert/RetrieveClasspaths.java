@@ -23,17 +23,13 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
 
@@ -47,40 +43,21 @@ import static java.util.stream.Collectors.toSet;
 /**
  * The type Retrieve classpaths.
  */
-public class RetrieveClasspaths
+public final class RetrieveClasspaths
 	{
 	
+	private static String JAR_FILE_EXTENSION="jar";
 	
+	private static final String RUNTIME_CLASSPATH_CONFIGURATION="runtimeClasspath";
 	
 	/**
 	 * Instantiates a new Retrieve classpaths.
 	 */
-	public RetrieveClasspaths()
+	private RetrieveClasspaths ()
 		{
-		
-		}
-	
-	
-	
-	/**
-	 * for using inside streamApi
-	 * hide exception and return optional
-	 *
-	 * @param file
-	 * 	the file
-	 *
-	 * @return the optional
-	 */
-	public static final Optional< URL > fileToUrl( File file )
-		{
-		try
-			{
-			return Optional.ofNullable( file.toURI().toURL() );
-			}
-		catch( MalformedURLException e )
-			{
-			return Optional.empty();
-			}
+ 
+		throw new UnsupportedOperationException( "Please use constructor with parameters." );
+ 
 		}
 	
 	
@@ -110,7 +87,7 @@ public class RetrieveClasspaths
 	 *
 	 * @return the set or empty value if input argument empty
 	 */
-	public static final Set< URL > classPathsMainSourceSet( Project project )
+	public static   Set< URL > classPathsMainSourceSet( Project project )
 		{
 		if( project == null )
 			{
@@ -122,7 +99,7 @@ public class RetrieveClasspaths
 		//StreamSupport.stream(  output.getClassesDirs().spliterator() ,false )
 		
 		return sourceSetMain( project ).stream().map( SourceSet::getOutput ).flatMap( output -> StreamSupport.stream( output.getClassesDirs().spliterator() ,
-		                                                                                                              false ) ).map( RetrieveClasspaths::fileToUrl ).filter( Optional::isPresent ).map( Optional::get ).collect( toSet() );
+		                                                                                                              false ) ).map( FileHelper::fileToUrl ).filter( Optional::isPresent ).map( Optional::get ).collect( toSet() );
 		}
 	
 	
@@ -135,16 +112,16 @@ public class RetrieveClasspaths
 	 *
 	 * @return the set
 	 */
-	public static final Set< URL > classPathsDependenciesJar( Project project )
+	public static   Set< URL > classPathsDependenciesJar( Project project )
 		{
 		if( project == null )
 			{
 			return Collections.emptySet();
 			}
 		//Project       p    = getProject();
-		Configuration conf = project.getConfigurations().getByName( "runtimeClasspath" );
+		Configuration conf = project.getConfigurations().getByName( RUNTIME_CLASSPATH_CONFIGURATION );
 		return StreamSupport.stream( conf.spliterator() ,
-		                             false ).filter( ( f ) -> f.getName().endsWith( "jar" ) ).map( RetrieveClasspaths::fileToUrl ).filter( Optional::isPresent ).map( Optional::get ).collect( toSet() );
+		                             false ).filter( ( f ) -> f.getName().endsWith( JAR_FILE_EXTENSION ) ).map( FileHelper::fileToUrl ).filter( Optional::isPresent ).map( Optional::get ).collect( toSet() );
 			
 		}
 	
@@ -158,7 +135,7 @@ public class RetrieveClasspaths
 	 *
 	 * @return the urls of all artifacts for classloader
 	 */
-	public static final Set< URL > retrieveClasspaths( Project project )
+	public static   Set< URL > retrieveClasspath( Project project )
 		{
 		if( project == null )
 			{
@@ -175,14 +152,15 @@ public class RetrieveClasspaths
 	
 	
 	/**
+	 * For all projects
 	 * Retrieve classpaths from dependencies jar and main source set
 	 *
 	 * @param project
-	 * 	the project
+	 * 	root project
 	 *
 	 * @return the url [ ] of all artifacts for classloader
 	 */
-	public static final URL[] retrieveClasspathsForAllProjects( Project project )
+	public static   URL[] retrieveClasspathForAllProjects( Project project )
 		{
 		if( project == null )
 			{
@@ -191,12 +169,35 @@ public class RetrieveClasspaths
 		
 		//project.getAllprojects().forEach( System.out::println );
 		
-		Set< URL > s = project.getAllprojects().stream().flatMap( p -> retrieveClasspaths( p ).stream() ).collect( toSet() );
-		s.forEach( System.out::println );
+		Set< URL > s = project.getAllprojects().stream().flatMap( p -> retrieveClasspath( p ).stream() ).collect( toSet() );
+		//s.forEach( System.out::println );
 		
 		return s.toArray( new URL[0] );
 		}
+	
+	/**
+	 * For main project
+	 * Retrieve classpaths from dependencies jar and main source set
+	 *
+	 * @param project
+	 * 	root project
+	 *
+	 * @return the url [ ] of all artifacts for classloader
+	 */
+	public static   URL[] retrieveClasspathForMainProject( Project project )
+		{
+		if( project == null )
+			{
+			return new URL[0];
+			}
 		
+		//project.getAllprojects().forEach( System.out::println );
+		
+		Set< URL > s = retrieveClasspath( project );
+		//s.forEach( System.out::println );
+		
+		return s.toArray( new URL[0] );
+		}
 		
 		
 	}

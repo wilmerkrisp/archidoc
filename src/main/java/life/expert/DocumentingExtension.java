@@ -35,9 +35,12 @@ import java.util.List;
 public class DocumentingExtension
 	{
 	
+	public static final String DEFAULT_FILENAME_="classdiagram.dot";
 	
 	
-	private String file;
+	
+	
+	private String file=DEFAULT_FILENAME_;
 	
 	
 	
