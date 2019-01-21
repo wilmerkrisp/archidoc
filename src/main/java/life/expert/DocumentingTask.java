@@ -72,32 +72,41 @@ public class DocumentingTask
 	
 	
 	
-	private void scanProgram( String[] selectedPackages ,
-	                          Object[] javaClasspaths ,
-	                          ConsumerIO< ClassInfoList > processScanResult )
+	private ClassGraph build(DocumentingExtension extension)
 		{
-		try( ScanResult scanResult =                // Assign scanResult in try-with-resources
-			     new ClassGraph()                    // Create a new ClassGraph instance
-			                                         .overrideClasspath( javaClasspaths ) //get custom classpath
-			                                         .verbose()                      // If you want to enable logging to stderr
-			                                         .enableAllInfo()                // Scan classes, methods, fields, annotations
-			                                         .whitelistPackages( selectedPackages )   // Scan com.xyz and subpackages
-			                                         .scan() )
-			{                      // Perform the scan and return a ScanResult
-			ClassInfoList class_list = scanResult.getAllClasses();
-			
-			
-			try
-				{
-				processScanResult.accept( class_list );
-				}
-			catch( IOException exception )
-				{
-				throw new RuntimeException( "Some IO exception in ClassGraph: " ,
-				                            exception );
-				}
-				
+		String[] selected_packages      = extension.getPackages().toArray( new String[1] );
+		Object[] java_classpaths = extension.getMultiProject() ? (Object[]) RetrieveClasspaths.retrieveClasspathForAllProjects( getProject() ) : (Object[]) RetrieveClasspaths.retrieveClasspathForMainProject( getProject() );
+		
+		
+		ClassGraph cg=new ClassGraph()                    // Create a new ClassGraph instance
+		                                                  .overrideClasspath( java_classpaths ) //get custom classpath
+		                                                  .verbose()                      // If you want to enable logging to stderr
+		                                                  .enableAllInfo()                // Scan classes, methods, fields, annotations
+		                                                  .whitelistPackages( selected_packages ) ;  // Scan com.xyz and subpackages
+		return null;
+		}
+	
+	
+	
+	private void scanProgram(DocumentingExtension extension, ConsumerIO< ClassInfoList > processScanResult )
+		{
+		ScanResult scanResult = build(extension).scan();
+		
+		
+		
+		// Perform the scan and return a ScanResult
+		ClassInfoList class_list = scanResult.getAllClasses();
+		try
+			{
+			processScanResult.accept( class_list );
 			}
+		catch( IOException exception )
+			{
+			throw new RuntimeException( "Some IO exception in ClassGraph: " ,
+			                            exception );
+			}
+			
+			
 			
 		}
 	
@@ -106,30 +115,20 @@ public class DocumentingTask
 	@TaskAction
 	void documentingArchitecture()
 		{
-		System.out.println( "v9" );
+		System.out.println( "v10" );
 		
 		
-		Project project = getProject();
 		
-		DocumentingExtension extension = project.getExtensions().findByType( DocumentingExtension.class );
+		DocumentingExtension extension = getProject().getExtensions().findByType( DocumentingExtension.class );
 		if( extension == null )
 			{
 			extension = new DocumentingExtension();
 			}
 		
-		//		String     message    = extension.getFile();
-		//		String     recipient    = extension.getPackages();
-		//
-		System.out.println( extension.getEnableAllInfo() + " + " + extension.getFile() + " + " + extension.getPackages() );
 		
-		//getProject().
+		String   filename      = extension.getFile();
 		
-		String[] packages      = extension.getPackages().toArray( new String[1] );
-		Object[] on_classpaths = (Object[]) RetrieveClasspaths.retrieveClasspathForAllProjects( project );
-		String   filename       = extension.getFile();
-		
-		scanProgram( packages ,
-		             on_classpaths ,
+		scanProgram( extension ,
 		             forSelectedClasses -> forSelectedClasses.generateGraphVizDotFile( createOrRetrieveDiagramFile( filename ) ) );
 		
 		//System.out.println( pkg );

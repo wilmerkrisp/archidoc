@@ -30,8 +30,13 @@ archidoc { <br>
 ./gradlew arhidoc
 
 
-Also options avialable:
+Also plugin options avialable:
 
+multiProject()          //if you want analyze also gradle subprojects, please build all subprojects because the task doesnot depend on subprojects build-tasks
+
+Also Classgraph options avialable:
+    
+    verbose()           // print all log messages
     enableFieldInfo()
     enableMethodInfo()      
     ignoreFieldVisibility() 

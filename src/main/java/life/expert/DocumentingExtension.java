@@ -35,12 +35,13 @@ import java.util.List;
 public class DocumentingExtension
 	{
 	
-	public static final String DEFAULT_FILENAME_="classdiagram.dot";
+	
+	
+	public static final String DEFAULT_FILENAME_ = "classdiagram.dot";
 	
 	
 	
-	
-	private String file=DEFAULT_FILENAME_;
+	private String file = DEFAULT_FILENAME_;
 	
 	
 	
@@ -294,7 +295,7 @@ public class DocumentingExtension
 	
 	
 	
-	private Boolean verbose=false;
+	private Boolean verbose = false;
 	
 	
 	
@@ -303,9 +304,9 @@ public class DocumentingExtension
 	 *
 	 * @return the verbose
 	 */
-	public String getVerbose()
+	public Boolean getVerbose()
 		{
-		return file;
+		return verbose;
 		}
 	
 	
@@ -316,9 +317,38 @@ public class DocumentingExtension
 	 * @param fake
 	 * 	the fake
 	 */
-	public void setVerbose( final boolean fake )
+	public void setVerbose( final Boolean fake )
 		{
 		this.verbose = true;
+		}
+	
+	
+	
+	private Boolean multiProject = false;
+	
+	
+	
+	/**
+	 * Gets verbose.
+	 *
+	 * @return the verbose
+	 */
+	public Boolean getMultiProject()
+		{
+		return multiProject;
+		}
+	
+	
+	
+	/**
+	 * Sets verbose.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
+	public void setMultiProject( final Boolean fake )
+		{
+		this.multiProject = true;
 		}
 		
 		

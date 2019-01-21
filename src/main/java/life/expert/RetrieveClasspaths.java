@@ -171,6 +171,7 @@ public final class RetrieveClasspaths
 		
 		Set< URL > s = project.getAllprojects().stream().flatMap( p -> retrieveClasspath( p ).stream() ).collect( toSet() );
 		//s.forEach( System.out::println );
+		System.out.println( "ALLPROJECTS" );
 		
 		return s.toArray( new URL[0] );
 		}
@@ -195,6 +196,7 @@ public final class RetrieveClasspaths
 		
 		Set< URL > s = retrieveClasspath( project );
 		//s.forEach( System.out::println );
+		System.out.println( "MAINPROJECT" );
 		
 		return s.toArray( new URL[0] );
 		}
