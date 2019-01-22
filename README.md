@@ -16,9 +16,11 @@ for using plugin in gradle
 1) configure plugin in build.gradle, select whrere to put file and your programm packages for analysis.
 
 plugins { <br>
-    id 'life.expert.archidoc' version '1.0.0'  <br>
+    id 'life.expert.archidoc' version '1.0.7'  <br>
     }
-
+<br>
+project.tasks.getByName("archidoc").dependsOn 'build'
+<br>
 archidoc { <br>
     file  "$buildDir/architecture/classdiagram.dot" <br>
     packages = ['com.my'] <br>
@@ -37,10 +39,28 @@ multiProject()          //if you want analyze also gradle subprojects, please bu
 Also Classgraph options avialable:
 
     verbose()           // print all log messages
+    enableAllInfo()    //  all information about classes
     enableFieldInfo()
     enableMethodInfo()
     ignoreFieldVisibility()
     ignoreMethodVisibility()
     enableClassInfo()
+
+
+Configuration for multiproject build:
+
+project.tasks.getByName("archidoc").dependsOn 'build',**':subproject:build'**
+archidoc {
+    file "$buildDir/architecture/classdiagram.dot"
+    packages = ['com.my', 'org.your']
+    **multiProject()**
+    enableAllInfo()
+    verbose()
+}
+
+
+
+
+
 
 Plugin avialable at https://plugins.gradle.org/u/wilmerkrisp

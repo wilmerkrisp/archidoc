@@ -76,6 +76,6 @@ public class DocumentingSoftwareArchitecture
 		
 		//t.setGroup( "architecture" );
 		//t.setDescription( "Generates class diagramm for the main source code." );
-		t.dependsOn( target.getTasks().getByPath( ":build" ) );
+		//t.dependsOn( target.getTasks().getByPath( ":build" ) );
 		}
 	}
