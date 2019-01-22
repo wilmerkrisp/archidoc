@@ -49,15 +49,15 @@ Also Classgraph options avialable:
 
 Configuration for multiproject build:
 
-project.tasks.getByName("archidoc").dependsOn 'build',**':subproject:build'**
-archidoc {
-    file "$buildDir/architecture/classdiagram.dot"
-    packages = ['com.my', 'org.your']
-    **multiProject()**
-    enableAllInfo()
-    verbose()
-}
-
+project.tasks.getByName("archidoc").dependsOn 'build',**':subproject:build'** <br>
+archidoc {<br>
+    file "$buildDir/architecture/classdiagram.dot"<br>
+    packages = ['com.my', 'org.your']<br>
+    **multiProject()**<br>
+    enableAllInfo()<br>
+    verbose()<br>
+}<br>
+<br>
 
 
 
