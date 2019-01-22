@@ -64,3 +64,5 @@ archidoc {
 
 
 Plugin avialable at https://plugins.gradle.org/u/wilmerkrisp
+
+Project for testing https://github.com/wilmerkrisp/archidoc-test
