@@ -66,10 +66,6 @@ public class DocumentingSoftwareArchitecture
 	
 	
 	
-
-	
-	
-	
 	@Override
 	public void apply( Project target )
 		{
@@ -81,17 +77,5 @@ public class DocumentingSoftwareArchitecture
 		//t.setGroup( "architecture" );
 		//t.setDescription( "Generates class diagramm for the main source code." );
 		t.dependsOn( target.getTasks().getByPath( ":build" ) );
-
-		//RawSourceLocations rawSourceLocations = p.rawSourceLocations();
-		
-		
-		//		FileCollection art_coll = conf.getAllArtifacts().getFiles();
-		//		System.out.println("vova1: "+ art_coll );
-		//		for( File f : art_coll )
-		//			{
-		//			System.out.println( f );
-		//			}
-		
-		
 		}
 	}

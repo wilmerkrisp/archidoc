@@ -58,7 +58,7 @@ import java.util.Optional;
  *
  *
  *
- * }</pre>
+ * }*</pre>
  */
 public final class FileHelper
 	{
@@ -68,10 +68,10 @@ public final class FileHelper
 	private FileHelper()
 		{
 		super();
-		
-		
+ 
 		throw new UnsupportedOperationException( "Dont use this PRIVATE constructor.Please use constructor with parameters." );
 		}
+	
 	
 	
 	/**
@@ -97,6 +97,16 @@ public final class FileHelper
 	
 	
 	
+	/**
+	 * Create or retrieve file file.
+	 *
+	 * @param fileName
+	 * 	the file name
+	 * @param defaultDir
+	 * 	the default dir
+	 *
+	 * @return the file
+	 */
 	public static File createOrRetrieveFile( final String fileName ,
 	                                         Path defaultDir )
 		{

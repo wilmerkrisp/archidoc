@@ -28,6 +28,7 @@ import org.gradle.api.tasks.TaskAction;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 
@@ -72,33 +73,28 @@ public class DocumentingTask
 	
 	
 	
-	private ClassGraph build(DocumentingExtension extension)
+	@TaskAction
+	void documentingArchitecture()
 		{
-		String[] selected_packages      = extension.getPackages().toArray( new String[1] );
-		Object[] java_classpaths = extension.getMultiProject() ? (Object[]) RetrieveClasspaths.retrieveClasspathForAllProjects( getProject() ) : (Object[]) RetrieveClasspaths.retrieveClasspathForMainProject( getProject() );
+		//System.out.println( "v12" );
 		
+		Project project = getProject();
 		
-		ClassGraph cg=new ClassGraph()                    // Create a new ClassGraph instance
-		                                                  .overrideClasspath( java_classpaths ) //get custom classpath
-		                                                  .verbose()                      // If you want to enable logging to stderr
-		                                                  .enableAllInfo()                // Scan classes, methods, fields, annotations
-		                                                  .whitelistPackages( selected_packages ) ;  // Scan com.xyz and subpackages
-		return null;
-		}
-	
-	
-	
-	private void scanProgram(DocumentingExtension extension, ConsumerIO< ClassInfoList > processScanResult )
-		{
-		ScanResult scanResult = build(extension).scan();
+		DocumentingExtension extension = project.getExtensions().findByType( DocumentingExtension.class );
+		if( extension == null )
+			{
+			extension = new DocumentingExtension();
+			}
 		
 		
 		
-		// Perform the scan and return a ScanResult
+		ScanResult scanResult = ClassGraphHelper.build( project ,
+		                                                extension ).scan();
 		ClassInfoList class_list = scanResult.getAllClasses();
 		try
 			{
-			processScanResult.accept( class_list );
+			String filename = extension.getFile();
+			class_list.generateGraphVizDotFile( createOrRetrieveDiagramFile( filename ) );
 			}
 		catch( IOException exception )
 			{
@@ -106,42 +102,6 @@ public class DocumentingTask
 			                            exception );
 			}
 			
-			
-			
-		}
-	
-	
-	
-	@TaskAction
-	void documentingArchitecture()
-		{
-		System.out.println( "v10" );
-		
-		
-		
-		DocumentingExtension extension = getProject().getExtensions().findByType( DocumentingExtension.class );
-		if( extension == null )
-			{
-			extension = new DocumentingExtension();
-			}
-		
-		
-		String   filename      = extension.getFile();
-		
-		scanProgram( extension ,
-		             forSelectedClasses -> forSelectedClasses.generateGraphVizDotFile( createOrRetrieveDiagramFile( filename ) ) );
-		
-		//System.out.println( pkg );
-		
-		
-		//class_list.generateGraphVizDotFile( createOrRetrieveDiagramFile( filename ) )
-		
-		//
-		
-		//ClassGraph#ignoreClassVisibility(), ClassGraph#ignoreFieldVisibility() and/or ClassGraph#ignoreMethodVisibility()
-		
-		
-		
 		}
 		
 	}

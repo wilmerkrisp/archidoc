@@ -11,8 +11,10 @@
 
 
 
- for debug
-  ./gradlew archidoc -Dorg.gradle.debug=true --no-daemon
+    !Please limit displayName and description to 255 characters!
+
+    for debug
+        ./gradlew archidoc -Dorg.gradle.debug=true --no-daemon
 
 
 */
@@ -29,7 +31,7 @@ plugins {
     //id "com.palantir.idea-test-fix" version "0.1.0"
 }
 
-version '1.0.4'
+version '1.0.6'
 group = 'life.expert'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -76,7 +78,9 @@ gradlePlugin {
         DocumentingSoftwareArchitecture {
             id = 'life.expert.archidoc'
             implementationClass = 'life.expert.DocumentingSoftwareArchitecture'
-            displayName = 'Documenting Software Architecture Plugin. Visualizing code of your application. It generates full diagram of your classes into .dot(graphviz) file. Plugin is based on work - Classgraph. You can open the generated .dot file in a vector editor. You can convert then the model into The Standard for exchange of architecture models from The Open Group'
+            displayName = 'Documenting Software Architecture Plugin. Visualizing code of your application. ' +
+                          'It generates full diagram of your classes into .dot(graphviz) file. Plugin is based on work - Classgraph. ' +
+                          'You can open the generated .dot file in a vector editor.'
             description = displayName
         }
     }
