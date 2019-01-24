@@ -20,7 +20,7 @@ Project for testing https://github.com/wilmerkrisp/archidoc-test
 1) configure plugin in build.gradle, select whrere to put file and your programm packages for analysis.
 
 plugins { <br>
-    id 'life.expert.archidoc' version '1.0.7'  <br>
+    id 'life.expert.archidoc' version '1.0.8'  <br>
     }
 <br>
 project.tasks.getByName("archidoc").dependsOn 'build'
@@ -68,7 +68,7 @@ archidoc {<br>
 
 plugins {<br>
     id "life.expert.archidoc" version "1.0.8"<br>
-    id "com.simonharrer.graphviz" version "0.0.1"<br>
+    id "com.simonharrer.graphviz" version "0.0.1"<br> // thanks to https://github.com/simonharrer/gradle-graphviz-plugin
 }
 
 archidoc {<br>
