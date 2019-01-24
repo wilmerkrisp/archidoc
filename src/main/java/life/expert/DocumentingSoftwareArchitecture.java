@@ -66,14 +66,27 @@ public class DocumentingSoftwareArchitecture
 	
 	
 	
+	public static final String TASK_NAME   = "archidoc";
+	
+	
+	
+	public static final String DESCRIPTION = "Generate diagram of classes (graphviz .dot file) of your projects.";
+	
+	
+	
+	public static final String GROUP       = "documentation";
+	
+	
+	
 	@Override
 	public void apply( Project target )
 		{
-		target.getExtensions().create( "archidoc" ,
+		target.getExtensions().create( TASK_NAME ,
 		                               DocumentingExtension.class );
-		DocumentingTask t = target.getTasks().create( "archidoc" ,
+		DocumentingTask t = target.getTasks().create( TASK_NAME ,
 		                                              DocumentingTask.class );
-		
+		t.setGroup( GROUP );
+		t.setDescription( DESCRIPTION );
 		//t.setGroup( "architecture" );
 		//t.setDescription( "Generates class diagramm for the main source code." );
 		//t.dependsOn( target.getTasks().getByPath( ":build" ) );
