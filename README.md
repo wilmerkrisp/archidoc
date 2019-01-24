@@ -11,7 +11,11 @@ Plugin uses all jars in runtimeClasspath configuration
 and also main source set build folder (there for the task depends on 'build' task)
 Scans both project and subprojects
 
-for using plugin in gradle
+Plugin avialable at https://plugins.gradle.org/u/wilmerkrisp
+
+Project for testing https://github.com/wilmerkrisp/archidoc-test
+
+<h2>for using plugin in gradle</h2>
 
 1) configure plugin in build.gradle, select whrere to put file and your programm packages for analysis.
 
@@ -32,7 +36,7 @@ archidoc { <br>
 ./gradlew arhidoc
 
 
-Also plugin options avialable:
+<h2>Also plugin options avialable:</h2>
 
 multiProject()          //if you want analyze also gradle subprojects, please build all subprojects because the task doesnot depend on subprojects build-tasks
 
@@ -47,7 +51,7 @@ Also Classgraph options avialable:
     enableClassInfo()
 
 
-Configuration for multiproject build:
+<h2>Configuration for multiproject build:</h2>
 
 project.tasks.getByName("archidoc").dependsOn 'build',**':subproject:build'** <br>
 archidoc {<br>
@@ -60,9 +64,24 @@ archidoc {<br>
 <br>
 
 
+<h2>how to instantly get .PNG file</h2>
+
+plugins {<br>
+    id "life.expert.archidoc" version "1.0.8"<br>
+    id "com.simonharrer.graphviz" version "0.0.1"<br>
+}
+
+archidoc {<br>
+    //Sorry. For "graphviz plugin" No configuration possible. <br>
+    //It just converts your **src/main/graphviz/**.dot to build/graphviz/.png.<br>
+    file "${project.projectDir}/src/main/graphviz/classdiagram.dot"<br>
+    packages = ['com.my' ]<br>
+    enableAllInfo()<br>
+}<br>
+
+graphviz.dependsOn(archidoc)<br>
 
 
+![howtouse](howtouse.png)
 
-Plugin avialable at https://plugins.gradle.org/u/wilmerkrisp
-
-Project for testing https://github.com/wilmerkrisp/archidoc-test
+![resultimagexample](resultimagexample.png)
