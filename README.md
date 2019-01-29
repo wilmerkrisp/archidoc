@@ -21,7 +21,7 @@ Project for testing https://github.com/wilmerkrisp/archidoc-test
 
 plugins { <br>
     id 'life.expert.archidoc' version '1.0.8'  <br>
-    }
+    }<br>
 <br>
 project.tasks.getByName("archidoc").dependsOn 'build'
 <br>
@@ -29,7 +29,7 @@ archidoc { <br>
     file  "$buildDir/architecture/classdiagram.dot" <br>
     packages = ['com.my'] <br>
     enableAllInfo()  <br>
-}
+}<br>
 
 2) run task archidoc
 
@@ -37,9 +37,9 @@ archidoc { <br>
 
 
 <h2>Also plugin options avialable:</h2>
-
+<br>
 multiProject()          //if you want analyze also gradle subprojects, please build all subprojects because the task doesnot depend on subprojects build-tasks
-
+<br>
 Also Classgraph options avialable:
 
     verbose()           // print all log messages
@@ -49,6 +49,8 @@ Also Classgraph options avialable:
     ignoreFieldVisibility()
     ignoreMethodVisibility()
     enableClassInfo()
+    enableAnnotationInfo()
+    ignoreClassVisibility()
 
 
 <h2>Configuration for multiproject build:</h2>
@@ -75,7 +77,7 @@ archidoc {<br>
     //Sorry. For "graphviz plugin" No configuration possible. <br>
     //It just converts your **src/main/graphviz/**.dot to build/graphviz/.png.<br>
     file "${project.projectDir}/src/main/graphviz/classdiagram.dot"<br>
-    packages = ['com.my' ]<br>
+    packages = ['org' ]<br>
     enableAllInfo()<br>
 }<br>
 
@@ -85,3 +87,12 @@ graphviz.dependsOn(archidoc)<br>
 ![howtouse](howtouse.png)
 
 ![resultimagexample](resultimagexample.png)
+
+
+<h2> what about really architecture  </h2>
+Programming is an art.
+What does a framework look like?
+Below is a hierarchical class diagram for the google Truth framework (about 600 items!).
+Obtained by using the archidoc plug-in. OmniGraffle was used to convert dot->png.
+
+<img src="ntruth600_hierarh_plus.png"  width="948">

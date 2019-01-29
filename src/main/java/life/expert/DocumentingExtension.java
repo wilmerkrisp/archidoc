@@ -350,7 +350,63 @@ public class DocumentingExtension
 		{
 		this.multiProject = true;
 		}
-		
+	
+	
+	private Boolean enableAnnotationInfo = false;
+	
+	
+	
+	/**
+	 * Gets verbose.
+	 *
+	 * @return the verbose
+	 */
+	public Boolean getEnableAnnotationInfo()
+		{
+		return enableAnnotationInfo;
+		}
+	
+	
+	
+	/**
+	 * Sets verbose.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
+	public void setEnableAnnotationInfo( final Boolean fake )
+		{
+		this.enableAnnotationInfo = true;
+		}
+	
+	private Boolean ignoreClassVisibility = false;
+	
+	
+	
+	/**
+	 * Gets verbose.
+	 *
+	 * @return the verbose
+	 */
+	public Boolean getIgnoreClassVisibility()
+		{
+		return ignoreClassVisibility;
+		}
+	
+	
+	
+	/**
+	 * Sets verbose.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
+	public void setIgnoreClassVisibility( final Boolean fake )
+		{
+		this.ignoreClassVisibility = true;
+		}
+	
+	
 		
 		
 	}

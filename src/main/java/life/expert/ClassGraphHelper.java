@@ -106,6 +106,15 @@ public final class ClassGraphHelper
 			//System.out.println( java_classpaths );
 			}
 		
+		if (extension.getEnableAnnotationInfo())
+			{
+			cg=cg.enableAnnotationInfo();
+			}
+		
+		if(extension.getIgnoreClassVisibility())
+			{
+			cg=cg.ignoreClassVisibility();
+			}
 		
 		
 		return cg;
