@@ -110,3 +110,10 @@ Obtained by using the archidoc plug-in. OmniGraffle was used to convert dot->png
        enableInterClassDependencies()<br>
          enableExternalClasses()<br>
  }<br>
+
+ Here is the simpliest example<br>
+![example_intern](example_intern.png)<br>
+![example_inter0](example_inter0.png)
+
+ Here is example with enableExternalClasses<br>
+ ![example_inter1.png](example_inter1.png)
