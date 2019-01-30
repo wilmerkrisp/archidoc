@@ -27,6 +27,7 @@ import org.gradle.api.tasks.TaskAction;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -64,11 +65,25 @@ public class DocumentingTask
 	private File createOrRetrieveDiagramFile( final String fileName )
 		
 		{
-		Path build_dir = getProject().getBuildDir().toPath();
-		Path parent    = build_dir.resolve( DEFAULT_DIAGRAM_DIRECTORY_NAME_ );
+		Path build_dir = getProject().getBuildDir()
+		                             .toPath();
+		Path parent = build_dir.resolve( DEFAULT_DIAGRAM_DIRECTORY_NAME_ );
 		
-		return FileHelper.createOrRetrieveFile( fileName ,
-		                                        parent );
+		return FileHelper.createOrRetrieveFile( fileName , parent );
+		}
+	
+	
+	
+	void ioWrapper( RunnableIO classGraphGenerate )
+		{
+		try
+			{
+			classGraphGenerate.run();
+			}
+		catch( IOException exception )
+			{
+			throw new RuntimeException( "Some IO exception in ClassGraph: " , exception );
+			}
 		}
 	
 	
@@ -80,27 +95,36 @@ public class DocumentingTask
 		
 		Project project = getProject();
 		
-		DocumentingExtension extension = project.getExtensions().findByType( DocumentingExtension.class );
+		DocumentingExtension extension = project.getExtensions()
+		                                        .findByType( DocumentingExtension.class );
 		if( extension == null )
 			{
 			extension = new DocumentingExtension();
 			}
 		
+		String file_name = extension.getFile();
+		File   dot_file  = createOrRetrieveDiagramFile( file_name );
 		
-		
-		ScanResult scanResult = ClassGraphHelper.build( project ,
-		                                                extension ).scan();
+		ScanResult scanResult = ClassGraphHelper.build( project , extension )
+		                                        .scan();
 		ClassInfoList class_list = scanResult.getAllClasses();
-		try
+		
+		if( extension.getEnableInterClassDependencies() )
 			{
-			String filename = extension.getFile();
-			class_list.generateGraphVizDotFile( createOrRetrieveDiagramFile( filename ) );
+			ioWrapper( () ->
+			           {
+			           try( final PrintWriter writer = new PrintWriter( dot_file ) )
+				           {
+				           writer.print( class_list.generateGraphVizDotFileFromClassDependencies() );
+				           }
+			           } );
 			}
-		catch( IOException exception )
+		else
 			{
-			throw new RuntimeException( "Some IO exception in ClassGraph: " ,
-			                            exception );
+			ioWrapper( () -> class_list.generateGraphVizDotFile( dot_file ) );
 			}
+			
+			
 			
 		}
 		

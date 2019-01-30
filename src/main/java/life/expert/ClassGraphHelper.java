@@ -60,8 +60,9 @@ public final class ClassGraphHelper
 	public static ClassGraph build( Project project ,
 	                                DocumentingExtension extension )
 		{
-		String[] selected_packages = extension.getPackages().toArray( new String[1] );
-		Object[] java_classpaths   = extension.getMultiProject() ? (Object[]) RetrieveClasspaths.retrieveClasspathForAllProjects( project ) : (Object[]) RetrieveClasspaths.retrieveClasspathForMainProject( project );
+		String[] selected_packages = extension.getPackages()
+		                                      .toArray( new String[1] );
+		Object[] java_classpaths = extension.getMultiProject() ? (Object[]) RetrieveClasspaths.retrieveClasspathForAllProjects( project ) : (Object[]) RetrieveClasspaths.retrieveClasspathForMainProject( project );
 		
 		
 		
@@ -102,20 +103,30 @@ public final class ClassGraphHelper
 		if( extension.getVerbose() )
 			{
 			cg = cg.verbose();
-			Arrays.stream( java_classpaths ).forEach( System.out::println );
+			Arrays.stream( java_classpaths )
+			      .forEach( System.out::println );
 			//System.out.println( java_classpaths );
 			}
 		
-		if (extension.getEnableAnnotationInfo())
+		if( extension.getEnableAnnotationInfo() )
 			{
-			cg=cg.enableAnnotationInfo();
+			cg = cg.enableAnnotationInfo();
 			}
 		
-		if(extension.getIgnoreClassVisibility())
+		if( extension.getIgnoreClassVisibility() )
 			{
-			cg=cg.ignoreClassVisibility();
+			cg = cg.ignoreClassVisibility();
 			}
 		
+		if( extension.getEnableInterClassDependencies() )
+			{
+			cg = cg.enableInterClassDependencies();
+			}
+		
+		if( extension.getEnableExternalClasses() )
+			{
+			cg = cg.enableExternalClasses();
+			}
 		
 		return cg;
 		}

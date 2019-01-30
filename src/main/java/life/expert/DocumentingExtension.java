@@ -406,7 +406,60 @@ public class DocumentingExtension
 		this.ignoreClassVisibility = true;
 		}
 	
+	private Boolean enableInterClassDependencies = false;
 	
-		
+	
+	
+	/**
+	 * Gets verbose.
+	 *
+	 * @return the verbose
+	 */
+	public Boolean getEnableInterClassDependencies()
+		{
+		return enableInterClassDependencies;
+		}
+	
+	
+	
+	/**
+	 * Sets verbose.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
+	public void setEnableInterClassDependencies( final Boolean fake )
+		{
+		this.enableInterClassDependencies = true;
+		}
+	
+	private Boolean enableExternalClasses = false;
+	
+	
+	
+	/**
+	 * Gets verbose.
+	 *
+	 * @return the verbose
+	 */
+	public Boolean getEnableExternalClasses()
+		{
+		return enableExternalClasses;
+		}
+	
+	
+	
+	/**
+	 * Sets verbose.
+	 *
+	 * @param fake
+	 * 	the fake
+	 */
+	public void setEnableExternalClasses( final Boolean fake )
+		{
+		this.enableExternalClasses = true;
+		}
+	
+	
 		
 	}

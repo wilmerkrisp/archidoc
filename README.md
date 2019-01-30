@@ -20,7 +20,7 @@ Project for testing https://github.com/wilmerkrisp/archidoc-test
 1) configure plugin in build.gradle, select whrere to put file and your programm packages for analysis.
 
 plugins { <br>
-    id 'life.expert.archidoc' version '1.0.9'  <br>
+    id 'life.expert.archidoc' version '1.0.10'  <br>
     }<br>
 <br>
 project.tasks.getByName("archidoc").dependsOn 'build'
@@ -51,6 +51,8 @@ Also Classgraph options avialable:
     enableClassInfo()
     enableAnnotationInfo()
     ignoreClassVisibility()
+    enableInterClassDependencies()
+    enableExternalClasses()
 
 
 <h2>Configuration for multiproject build:</h2>
@@ -69,7 +71,7 @@ archidoc {<br>
 <h2>how to instantly get .PNG file</h2>
 
 plugins {<br>
-    id "life.expert.archidoc" version "1.0.9"<br>
+    id "life.expert.archidoc" version "1.0.10"<br>
     id "com.simonharrer.graphviz" version "0.0.1"<br> // thanks to https://github.com/simonharrer/gradle-graphviz-plugin
 }
 
@@ -96,3 +98,15 @@ Below is a hierarchical class diagram for the google Truth framework (about 600 
 Obtained by using the archidoc plug-in. OmniGraffle was used to convert dot->png.
 
 <img src="ntruth600_hierarh_plus.png"  width="948">
+
+<h2> For inter class dependencies</h2>
+
+ Includes class references in local variables or intermediate values
+ <br>
+ archidoc { <br>
+     file  "$buildDir/architecture/classdiagram.dot" <br>
+     packages = ['com.my'] <br>
+     enableAllInfo()  <br>
+       enableInterClassDependencies()<br>
+         enableExternalClasses()<br>
+ }<br>

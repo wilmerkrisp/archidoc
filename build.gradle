@@ -31,7 +31,7 @@ plugins {
     //id "com.palantir.idea-test-fix" version "0.1.0"
 }
 
-version '1.0.9'
+version '1.0.10'
 group = 'life.expert'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -51,7 +51,7 @@ dependencies {
     testImplementation gradleTestKit()
 
     //implementation  'io.github.classgraph:classgraph:4.6.12'
-    implementation 'io.github.classgraph:classgraph:4.6.10'
+    implementation 'io.github.classgraph:classgraph:4.6.26'
 }
 
 
