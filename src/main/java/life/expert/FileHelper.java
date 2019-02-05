@@ -18,16 +18,19 @@ package life.expert;
 
 
 
+import com.google.common.flogger.FluentLogger;
 import org.gradle.api.Project;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 
 
@@ -58,17 +61,21 @@ import java.util.Optional;
  *
  *
  *
- * }*</pre>
+ * }*****</pre>
  */
 public final class FileHelper
 	{
 	
- 
+	
+	
+	private static final FluentLogger logger_ = FluentLogger.forEnclosingClass();
+	
+	
 	
 	private FileHelper()
 		{
 		super();
- 
+		
 		throw new UnsupportedOperationException( "Dont use this PRIVATE constructor.Please use constructor with parameters." );
 		}
 	
@@ -87,7 +94,8 @@ public final class FileHelper
 		{
 		try
 			{
-			return Optional.ofNullable( file.toURI().toURL() );
+			return Optional.ofNullable( file.toURI()
+			                                .toURL() );
 			}
 		catch( MalformedURLException e )
 			{
@@ -120,27 +128,75 @@ public final class FileHelper
 				//Path build_dir = project.getBuildDir().toPath();
 				//parent = defaultDir.resolve( "architecture" );
 				path = parent.resolve( path );
-				System.out.println( "Build directory used: " + path.toAbsolutePath() );
+				
+				logger_.atInfo()
+				       .log( "Build directory used: %s" , path.toAbsolutePath() );
 				}
 			if( Files.notExists( path ) )
 				{
 				Files.createDirectories( parent );
-				Files.createFile( path ).toFile();
-				System.out.println( "Target file " + path.toAbsolutePath() + " will be created." );
+				Files.createFile( path )
+				     .toFile();
+				
+				logger_.atInfo()
+				       .log( "Target file created: %s" , path.toAbsolutePath() );
 				}
 			else
 				{
-				System.out.println( "Target file \"" + path.toAbsolutePath() + "\" will be retrieved." );
+				
+				logger_.atInfo()
+				       .log( "Target file retrieved: %s" , path.toAbsolutePath() );
 				}
 			}
 		catch( IOException exception )
 			{
-			throw new RuntimeException( "Please set correct path for file with filename. For example file  \"$buildDir/architecture/classdiagram.dot\" " ,
-			                            exception );
+			throw new RuntimeException( "Please set correct path for file with filename. For example file  \"$buildDir/architecture/classdiagram.dot\" " , exception );
 			}
 		return path.toFile();
 		}
-		
-		
+	
+	
+	
+	/**
+	 * Io wrapper.
+	 *
+	 * @param classGraphGenerate
+	 * 	the class graph generate
+	 */
+	public static void ioWrapper( RunnableIO classGraphGenerate )
+		{
+		try
+			{
+			classGraphGenerate.run();
+			}
+		catch( IOException exception )
+			{
+			throw new RuntimeException( "Some IO exception in ClassGraph: " , exception );
+			}
+		}
+	
+	
+	
+	/**
+	 * Writer wrapper runnable io.
+	 *
+	 * @param file
+	 * 	the file
+	 * @param classGraphGenerate
+	 * 	the class graph generate
+	 *
+	 * @return the runnable io
+	 */
+	public static RunnableIO writerWrapper( File file ,
+	                                        Supplier< String > classGraphGenerate )
+		{
+		return () ->
+		{
+		try( final PrintWriter writer = new PrintWriter( file ) )
+			{
+			writer.print( classGraphGenerate.get() );
+			}
+		};
+		}
 		
 	}

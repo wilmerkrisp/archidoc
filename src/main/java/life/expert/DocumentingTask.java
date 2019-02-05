@@ -31,6 +31,9 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import static life.expert.FileHelper.*;
 
 
 
@@ -69,21 +72,7 @@ public class DocumentingTask
 		                             .toPath();
 		Path parent = build_dir.resolve( DEFAULT_DIAGRAM_DIRECTORY_NAME_ );
 		
-		return FileHelper.createOrRetrieveFile( fileName , parent );
-		}
-	
-	
-	
-	void ioWrapper( RunnableIO classGraphGenerate )
-		{
-		try
-			{
-			classGraphGenerate.run();
-			}
-		catch( IOException exception )
-			{
-			throw new RuntimeException( "Some IO exception in ClassGraph: " , exception );
-			}
+		return createOrRetrieveFile( fileName , parent );
 		}
 	
 	
@@ -111,13 +100,14 @@ public class DocumentingTask
 		
 		if( extension.getEnableInterClassDependencies() )
 			{
-			ioWrapper( () ->
-			           {
-			           try( final PrintWriter writer = new PrintWriter( dot_file ) )
-				           {
-				           writer.print( class_list.generateGraphVizDotFileFromClassDependencies() );
-				           }
-			           } );
+			//			ioWrapper( () ->
+			//			           {
+			//			           try( final PrintWriter writer = new PrintWriter( dot_file ) )
+			//				           {
+			//				           writer.print( class_list.generateGraphVizDotFileFromClassDependencies() );
+			//				           }
+			//			           } );
+			ioWrapper( writerWrapper( dot_file , class_list::generateGraphVizDotFileFromClassDependencies ) );
 			}
 		else
 			{

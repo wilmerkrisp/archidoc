@@ -18,6 +18,7 @@ package life.expert;
 
 
 
+import com.google.common.flogger.FluentLogger;
 import io.github.classgraph.ClassGraph;
 import org.gradle.api.Project;
 
@@ -37,7 +38,7 @@ import java.util.Arrays;
 public final class ClassGraphHelper
 	{
 	
-	
+	private static final FluentLogger logger_ = FluentLogger.forEnclosingClass();
 	
 	private ClassGraphHelper()
 		{
@@ -104,7 +105,9 @@ public final class ClassGraphHelper
 			{
 			cg = cg.verbose();
 			Arrays.stream( java_classpaths )
-			      .forEach( System.out::println );
+			      .forEach(s-> logger_.atInfo().log(s.toString()) );
+			
+			
 			//System.out.println( java_classpaths );
 			}
 		
