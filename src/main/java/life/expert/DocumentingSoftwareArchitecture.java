@@ -61,12 +61,12 @@ import java.util.stream.StreamSupport;
  * }
  */
 public class DocumentingSoftwareArchitecture
-	implements Plugin< Project >
+	implements Plugin<Project>
 	{
 	
 	
 	
-	public static final String TASK_NAME   = "archidoc";
+	public static final String TASK_NAME = "archidoc";
 	
 	
 	
@@ -74,17 +74,19 @@ public class DocumentingSoftwareArchitecture
 	
 	
 	
-	public static final String GROUP       = "documentation";
+	public static final String GROUP = "documentation";
 	
 	
 	
 	@Override
 	public void apply( Project target )
 		{
-		target.getExtensions().create( TASK_NAME ,
-		                               DocumentingExtension.class );
-		DocumentingTask t = target.getTasks().create( TASK_NAME ,
-		                                              DocumentingTask.class );
+		target.getExtensions()
+		      .create( TASK_NAME ,
+		               DocumentingExtension.class );
+		DocumentingTask t = target.getTasks()
+		                          .create( TASK_NAME ,
+		                                   DocumentingTask.class );
 		t.setGroup( GROUP );
 		t.setDescription( DESCRIPTION );
 		//t.setGroup( "architecture" );

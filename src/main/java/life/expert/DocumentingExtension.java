@@ -70,7 +70,7 @@ public class DocumentingExtension
 	
 	
 	
-	private ArrayList< String > packages = new ArrayList< String >();
+	private ArrayList<String> packages = new ArrayList<String>();
 	
 	
 	
@@ -79,7 +79,7 @@ public class DocumentingExtension
 	 *
 	 * @return the packages
 	 */
-	public List< String > getPackages()
+	public List<String> getPackages()
 		{
 		return packages;
 		}
@@ -92,7 +92,7 @@ public class DocumentingExtension
 	 * @param packages
 	 * 	the packages
 	 */
-	public void setPackages( List< String > packages )
+	public void setPackages( List<String> packages )
 		{
 		this.packages.clear();
 		this.packages.addAll( packages );
@@ -352,6 +352,7 @@ public class DocumentingExtension
 		}
 	
 	
+	
 	private Boolean enableAnnotationInfo = false;
 	
 	
@@ -378,6 +379,8 @@ public class DocumentingExtension
 		{
 		this.enableAnnotationInfo = true;
 		}
+	
+	
 	
 	private Boolean ignoreClassVisibility = false;
 	
@@ -406,6 +409,8 @@ public class DocumentingExtension
 		this.ignoreClassVisibility = true;
 		}
 	
+	
+	
 	private Boolean enableInterClassDependencies = false;
 	
 	
@@ -433,6 +438,8 @@ public class DocumentingExtension
 		this.enableInterClassDependencies = true;
 		}
 	
+	
+	
 	private Boolean enableExternalClasses = false;
 	
 	
@@ -459,7 +466,7 @@ public class DocumentingExtension
 		{
 		this.enableExternalClasses = true;
 		}
-	
-	
+		
+		
 		
 	}

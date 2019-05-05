@@ -71,10 +71,15 @@ public final class RetrieveClasspaths
 	/**
 	 * get gradle  main source set
 	 */
-	private static Set< SourceSet > sourceSetMain( Project project )
+	private static Set<SourceSet> sourceSetMain( Project project )
 		{
-		JavaPluginConvention convention = project.getConvention().findPlugin( JavaPluginConvention.class );
-		Set< SourceSet >     sourceSets = convention.getSourceSets().stream().filter( sourceSet -> sourceSet.getName().equals( SourceSet.MAIN_SOURCE_SET_NAME ) ).collect( Collectors.toSet() );
+		JavaPluginConvention convention = project.getConvention()
+		                                         .findPlugin( JavaPluginConvention.class );
+		Set<SourceSet>       sourceSets = convention.getSourceSets()
+		                                            .stream()
+		                                            .filter( sourceSet -> sourceSet.getName()
+		                                                                           .equals( SourceSet.MAIN_SOURCE_SET_NAME ) )
+		                                            .collect( Collectors.toSet() );
 		return sourceSets;
 		}
 	
@@ -89,15 +94,22 @@ public final class RetrieveClasspaths
 	 *
 	 * @return the set or empty value if input argument empty
 	 */
-	public static Set< URL > classPathsMainSourceSet( Project project )
+	public static Set<URL> classPathsMainSourceSet( Project project )
 		{
 		if( project == null )
 			{
 			return Collections.emptySet();
 			}
 		
-		return sourceSetMain( project ).stream().map( SourceSet::getOutput ).flatMap( output -> StreamSupport.stream( output.getClassesDirs().spliterator() ,
-		                                                                                                              false ) ).map( FileHelper::fileToUrl ).filter( Optional::isPresent ).map( Optional::get ).collect( toSet() );
+		return sourceSetMain( project ).stream()
+		                               .map( SourceSet::getOutput )
+		                               .flatMap( output -> StreamSupport.stream( output.getClassesDirs()
+		                                                                               .spliterator() ,
+		                                                                         false ) )
+		                               .map( FileHelper::fileToUrl )
+		                               .filter( Optional::isPresent )
+		                               .map( Optional::get )
+		                               .collect( toSet() );
 		}
 	
 	
@@ -110,16 +122,23 @@ public final class RetrieveClasspaths
 	 *
 	 * @return the set
 	 */
-	public static Set< URL > classPathsDependenciesJar( Project project )
+	public static Set<URL> classPathsDependenciesJar( Project project )
 		{
 		if( project == null )
 			{
 			return Collections.emptySet();
 			}
 		
-		Configuration conf = project.getConfigurations().getByName( RUNTIME_CLASSPATH_CONFIGURATION );
+		Configuration conf = project.getConfigurations()
+		                            .getByName( RUNTIME_CLASSPATH_CONFIGURATION );
 		return StreamSupport.stream( conf.spliterator() ,
-		                             false ).filter( ( f ) -> f.getName().endsWith( JAR_FILE_EXTENSION ) ).map( FileHelper::fileToUrl ).filter( Optional::isPresent ).map( Optional::get ).collect( toSet() );
+		                             false )
+		                    .filter( ( f ) -> f.getName()
+		                                       .endsWith( JAR_FILE_EXTENSION ) )
+		                    .map( FileHelper::fileToUrl )
+		                    .filter( Optional::isPresent )
+		                    .map( Optional::get )
+		                    .collect( toSet() );
 			
 		}
 	
@@ -133,14 +152,14 @@ public final class RetrieveClasspaths
 	 *
 	 * @return the urls of all artifacts for classloader
 	 */
-	public static Set< URL > retrieveClasspath( Project project )
+	public static Set<URL> retrieveClasspath( Project project )
 		{
 		if( project == null )
 			{
 			return Collections.emptySet();
 			}
 		
-		Set< URL > s = classPathsDependenciesJar( project );
+		Set<URL> s = classPathsDependenciesJar( project );
 		s.addAll( classPathsMainSourceSet( project ) );
 		
 		return s;
@@ -164,7 +183,10 @@ public final class RetrieveClasspaths
 			return new URL[0];
 			}
 		
-		Set< URL > s = project.getAllprojects().stream().flatMap( p -> retrieveClasspath( p ).stream() ).collect( toSet() );
+		Set<URL> s = project.getAllprojects()
+		                    .stream()
+		                    .flatMap( p -> retrieveClasspath( p ).stream() )
+		                    .collect( toSet() );
 		
 		return s.toArray( new URL[0] );
 		}
@@ -187,7 +209,7 @@ public final class RetrieveClasspaths
 			return new URL[0];
 			}
 		
-		Set< URL > s = retrieveClasspath( project );
+		Set<URL> s = retrieveClasspath( project );
 		
 		return s.toArray( new URL[0] );
 		}

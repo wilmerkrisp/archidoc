@@ -90,7 +90,7 @@ public final class FileHelper
 	 *
 	 * @return the optional
 	 */
-	public static Optional< URL > fileToUrl( File file )
+	public static Optional<URL> fileToUrl( File file )
 		{
 		try
 			{
@@ -130,7 +130,8 @@ public final class FileHelper
 				path = parent.resolve( path );
 				
 				logger_.atInfo()
-				       .log( "Build directory used: %s" , path.toAbsolutePath() );
+				       .log( "Build directory used: %s" ,
+				             path.toAbsolutePath() );
 				}
 			if( Files.notExists( path ) )
 				{
@@ -139,18 +140,21 @@ public final class FileHelper
 				     .toFile();
 				
 				logger_.atInfo()
-				       .log( "Target file created: %s" , path.toAbsolutePath() );
+				       .log( "Target file created: %s" ,
+				             path.toAbsolutePath() );
 				}
 			else
 				{
 				
 				logger_.atInfo()
-				       .log( "Target file retrieved: %s" , path.toAbsolutePath() );
+				       .log( "Target file retrieved: %s" ,
+				             path.toAbsolutePath() );
 				}
 			}
 		catch( IOException exception )
 			{
-			throw new RuntimeException( "Please set correct path for file with filename. For example file  \"$buildDir/architecture/classdiagram.dot\" " , exception );
+			throw new RuntimeException( "Please set correct path for file with filename. For example file  \"$buildDir/architecture/classdiagram.dot\" " ,
+			                            exception );
 			}
 		return path.toFile();
 		}
@@ -171,7 +175,8 @@ public final class FileHelper
 			}
 		catch( IOException exception )
 			{
-			throw new RuntimeException( "Some IO exception in ClassGraph: " , exception );
+			throw new RuntimeException( "Some IO exception in ClassGraph: " ,
+			                            exception );
 			}
 		}
 	
@@ -188,7 +193,7 @@ public final class FileHelper
 	 * @return the runnable io
 	 */
 	public static RunnableIO writerWrapper( File file ,
-	                                        Supplier< String > classGraphGenerate )
+	                                        Supplier<String> classGraphGenerate )
 		{
 		return () ->
 		{

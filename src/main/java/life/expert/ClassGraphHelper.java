@@ -38,7 +38,11 @@ import java.util.Arrays;
 public final class ClassGraphHelper
 	{
 	
+	
+	
 	private static final FluentLogger logger_ = FluentLogger.forEnclosingClass();
+	
+	
 	
 	private ClassGraphHelper()
 		{
@@ -105,7 +109,8 @@ public final class ClassGraphHelper
 			{
 			cg = cg.verbose();
 			Arrays.stream( java_classpaths )
-			      .forEach(s-> logger_.atInfo().log(s.toString()) );
+			      .forEach( s -> logger_.atInfo()
+			                            .log( s.toString() ) );
 			
 			
 			//System.out.println( java_classpaths );
