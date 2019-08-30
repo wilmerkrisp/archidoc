@@ -72,8 +72,7 @@ public class DocumentingTask
 		                             .toPath();
 		Path parent = build_dir.resolve( DEFAULT_DIAGRAM_DIRECTORY_NAME_ );
 		
-		return createOrRetrieveFile( fileName ,
-		                             parent );
+		return createOrRetrieveFile( fileName , parent );
 		}
 	
 	
@@ -95,8 +94,7 @@ public class DocumentingTask
 		String file_name = extension.getFile();
 		File   dot_file  = createOrRetrieveDiagramFile( file_name );
 		
-		ScanResult scanResult = ClassGraphHelper.build( project ,
-		                                                extension )
+		ScanResult scanResult = ClassGraphHelper.build( project , extension )
 		                                        .scan();
 		ClassInfoList class_list = scanResult.getAllClasses();
 		
@@ -109,8 +107,7 @@ public class DocumentingTask
 			//				           writer.print( class_list.generateGraphVizDotFileFromClassDependencies() );
 			//				           }
 			//			           } );
-			ioWrapper( writerWrapper( dot_file ,
-			                          class_list::generateGraphVizDotFileFromClassDependencies ) );
+			ioWrapper( writerWrapper( dot_file , class_list::generateGraphVizDotFileFromClassDependencies ) );
 			}
 		else
 			{

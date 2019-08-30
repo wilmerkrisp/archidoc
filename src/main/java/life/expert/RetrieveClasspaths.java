@@ -75,11 +75,11 @@ public final class RetrieveClasspaths
 		{
 		JavaPluginConvention convention = project.getConvention()
 		                                         .findPlugin( JavaPluginConvention.class );
-		Set<SourceSet>       sourceSets = convention.getSourceSets()
-		                                            .stream()
-		                                            .filter( sourceSet -> sourceSet.getName()
-		                                                                           .equals( SourceSet.MAIN_SOURCE_SET_NAME ) )
-		                                            .collect( Collectors.toSet() );
+		Set<SourceSet> sourceSets = convention.getSourceSets()
+		                                      .stream()
+		                                      .filter( sourceSet -> sourceSet.getName()
+		                                                                     .equals( SourceSet.MAIN_SOURCE_SET_NAME ) )
+		                                      .collect( Collectors.toSet() );
 		return sourceSets;
 		}
 	
@@ -104,8 +104,7 @@ public final class RetrieveClasspaths
 		return sourceSetMain( project ).stream()
 		                               .map( SourceSet::getOutput )
 		                               .flatMap( output -> StreamSupport.stream( output.getClassesDirs()
-		                                                                               .spliterator() ,
-		                                                                         false ) )
+		                                                                               .spliterator() , false ) )
 		                               .map( FileHelper::fileToUrl )
 		                               .filter( Optional::isPresent )
 		                               .map( Optional::get )
@@ -131,8 +130,7 @@ public final class RetrieveClasspaths
 		
 		Configuration conf = project.getConfigurations()
 		                            .getByName( RUNTIME_CLASSPATH_CONFIGURATION );
-		return StreamSupport.stream( conf.spliterator() ,
-		                             false )
+		return StreamSupport.stream( conf.spliterator() , false )
 		                    .filter( ( f ) -> f.getName()
 		                                       .endsWith( JAR_FILE_EXTENSION ) )
 		                    .map( FileHelper::fileToUrl )
